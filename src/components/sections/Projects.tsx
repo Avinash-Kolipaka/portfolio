@@ -46,7 +46,7 @@ const projects = [
             "AI-powered co-founder matching platform with a weighted compatibility algorithm (0–100). Built a full-stack MERN platform with real-time chat using Socket.io, JWT authentication, and MongoDB persistence.",
         tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io", "JWT", "Tailwind CSS"],
         github: "https://github.com/avinashkolipaka",
-        demo: "https://startup-match-ai.vercel.app/login",
+        demo: "https://startup-match-ai.vercel.app/",
         gradient: "from-blue-500/20 to-purple-500/20",
         border: "border-blue-500/30",
         glow: "group-hover:shadow-[0_0_40px_rgba(59,130,246,0.3)]",
