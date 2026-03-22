@@ -174,10 +174,11 @@ export default function Hero() {
                         <MagneticButton>
                             <a
                                 href="/resume.pdf"
-                                download
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="group flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/20 font-semibold hover:border-primary/50 hover:bg-primary/10 transition-all hover:scale-105 active:scale-95"
                             >
-                                Download CV
+                                View CV
                                 <Download size={18} className="group-hover:translate-y-1 transition-transform" />
                             </a>
                         </MagneticButton>

@@ -46,7 +46,7 @@ const projects = [
             "AI-powered co-founder matching platform with a weighted compatibility algorithm (0–100). Built a full-stack MERN platform with real-time chat using Socket.io, JWT authentication, and MongoDB persistence.",
         tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io", "JWT", "Tailwind CSS"],
         github: "https://github.com/avinashkolipaka",
-        demo: "#",
+        demo: "https://startup-match-ai.vercel.app",
         gradient: "from-blue-500/20 to-purple-500/20",
         border: "border-blue-500/30",
         glow: "group-hover:shadow-[0_0_40px_rgba(59,130,246,0.3)]",
@@ -72,7 +72,7 @@ const projects = [
             "Flask-based tool that formats professional emails automatically using Python. Implements text processing, formatting logic, and data-handling techniques to optimize processing efficiency.",
         tech: ["Python", "Flask", "HTML", "CSS"],
         github: "https://github.com/avinashkolipaka",
-        demo: "#",
+        demo: "https://email-based-text-formatter.vercel.app",
         gradient: "from-orange-500/20 to-red-500/20",
         border: "border-orange-500/30",
         glow: "group-hover:shadow-[0_0_40px_rgba(249,115,22,0.3)]",
@@ -148,6 +148,8 @@ export default function Projects() {
                                         </a>
                                         <a
                                             href={project.demo}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/20 border border-primary/30 text-sm text-primary hover:bg-primary/30 transition-all hover:scale-105"
                                         >
                                             <ExternalLink size={14} /> Live Demo

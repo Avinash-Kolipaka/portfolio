@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -13,6 +13,7 @@ const NAV_LINKS = [
     { name: "Achievements", href: "#achievements" },
     { name: "Experience", href: "#experience" },
     { name: "Certifications", href: "#certifications" },
+    { name: "Training", href: "#training" },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -96,6 +97,16 @@ export default function Navbar() {
                                 )}
                             </a>
                         ))}
+                        {/* CV Button */}
+                        <a
+                            href="/resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-primary/10 border border-primary/30 text-primary text-sm font-semibold hover:bg-primary/20 hover:border-primary/60 transition-all hover:scale-105 active:scale-95"
+                        >
+                            <FileText size={14} />
+                            CV
+                        </a>
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -131,6 +142,17 @@ export default function Navbar() {
                                 {link.name}
                             </a>
                         ))}
+                        {/* CV Button */}
+                        <a
+                            href="/resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary/10 border border-primary/30 text-primary text-xl font-bold hover:bg-primary/20 transition-all"
+                        >
+                            <FileText size={20} />
+                            CV
+                        </a>
                     </motion.div>
                 )}
             </AnimatePresence>

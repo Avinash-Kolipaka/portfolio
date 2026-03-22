@@ -13,6 +13,7 @@ import Projects from "@/components/sections/Projects";
 import Achievements from "@/components/sections/Achievements";
 import Experience from "@/components/sections/Experience";
 import Certifications from "@/components/sections/Certifications";
+import Training from "@/components/sections/Training";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 
@@ -103,6 +104,9 @@ export default function Home() {
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mx-8" />
 
           <Certifications />
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mx-8" />
+
+          <Training />
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mx-8" />
 
           <Contact />
