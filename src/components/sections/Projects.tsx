@@ -45,7 +45,7 @@ const projects = [
         description:
             "AI-powered co-founder matching platform with a weighted compatibility algorithm (0–100). Built a full-stack MERN platform with real-time chat using Socket.io, JWT authentication, and MongoDB persistence.",
         tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io", "JWT", "Tailwind CSS"],
-        github: "https://github.com/avinashkolipaka",
+        github: "https://github.com/Avinash-Kolipaka",
         demo: "https://startup-match-ai.vercel.app/",
         gradient: "from-blue-500/20 to-purple-500/20",
         border: "border-blue-500/30",
@@ -58,7 +58,7 @@ const projects = [
         description:
             "Smart agriculture solution that analyzes soil parameters (pH, N, P, K) using real-time data to generate data-driven fertilizer recommendations and improve decision accuracy for crop planning.",
         tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
-        github: "https://github.com/avinashkolipaka",
+        github: "https://github.com/Avinash-Kolipaka",
         demo: "#",
         gradient: "from-green-500/20 to-emerald-500/20",
         border: "border-green-500/30",
@@ -71,7 +71,7 @@ const projects = [
         description:
             "Flask-based tool that formats professional emails automatically using Python. Implements text processing, formatting logic, and data-handling techniques to optimize processing efficiency.",
         tech: ["Python", "Flask", "HTML", "CSS"],
-        github: "https://github.com/avinashkolipaka",
+        github: "https://github.com/Avinash-Kolipaka",
         demo: "https://email-based-text-formatter.vercel.app/",
         gradient: "from-orange-500/20 to-red-500/20",
         border: "border-orange-500/30",

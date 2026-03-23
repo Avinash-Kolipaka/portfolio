@@ -21,7 +21,7 @@ export default function Contact() {
     const socials = [
         { icon: <Mail size={20} />, label: "Email", value: "avinashkolipaka01@gmail.com", href: "mailto:avinashkolipaka01@gmail.com" },
         { icon: <Linkedin size={20} />, label: "LinkedIn", value: "linkedin.com/in/avinash-kolipaka", href: "https://linkedin.com/in/avinash-kolipaka" },
-        { icon: <Github size={20} />, label: "GitHub", value: "github.com/Kolipaka-Avinash", href: "https://github.com/Kolipaka-Avinash" },
+        { icon: <Github size={20} />, label: "GitHub", value: "github.com/Avinash-Kolipaka", href: "https://github.com/Avinash-Kolipaka" },
     ];
 
     return (

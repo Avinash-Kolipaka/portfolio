@@ -15,7 +15,7 @@ export default function Footer() {
                 {/* Social Icons */}
                 <div className="flex items-center gap-5">
                     {[
-                        { href: "https://github.com/Kolipaka-Avinash", icon: <Github size={18} /> },
+                        { href: "https://github.com/Avinash-Kolipaka", icon: <Github size={18} /> },
                         { href: "https://linkedin.com/in/avinash-kolipaka", icon: <Linkedin size={18} /> },
                         { href: "mailto:avinashkolipaka01@gmail.com", icon: <Mail size={18} /> },
                     ].map(({ href, icon }) => (

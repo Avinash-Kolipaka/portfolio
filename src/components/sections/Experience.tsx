@@ -21,6 +21,34 @@ const experiences = [
             "Engaged in real-time coding, problem-solving, and open-source learning.",
         ],
     },
+    {
+        type: "education",
+        icon: <GraduationCap size={18} />,
+        role: "Intermediate",
+        company: "Alphores Junior College",
+        location: "Karimnagar, Telangana, India",
+        period: "Jun 2022 – Apr 2023",
+        color: "border-primary/50 bg-primary/10",
+        iconColor: "text-primary",
+        achievements: [
+            "Completed higher secondary education focusing on technical problem-solving and fundamental mathematics.",
+            "Developed a robust academic background driving the ambition for engineering studies."
+        ],
+    },
+    {
+        type: "education",
+        icon: <GraduationCap size={18} />,
+        role: "Matriculation",
+        company: "Telangana State Model School",
+        location: "Gangadhara, Telangana, India",
+        period: "Jun 2020 – Apr 2021",
+        color: "border-secondary/50 bg-secondary/10",
+        iconColor: "text-secondary",
+        achievements: [
+            "Completed foundational education demonstrating consistent academic performance.",
+            "Actively participated in school programs to build a comprehensive foundational knowledge base."
+        ],
+    },
 ];
 
 export default function Experience() {
