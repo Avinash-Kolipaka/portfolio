@@ -1,105 +1,133 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { 
+  ArrowUpRight, 
+  Terminal, 
+  Cpu, 
+  Scan, 
+  Layers, 
+  ShieldCheck, 
+  Sparkles, 
+  FileText,
+  Activity
+} from "lucide-react";
 import Link from "next/link";
-import { ArrowDown, FileText, Send } from "lucide-react";
-import BoundingBox from "../hud/BoundingBox";
-import HeroPointCloud from "../visual/HeroPointCloud";
-import { profile } from "@/data/profile";
+import { PROFILE } from "@/data/profile";
 
-export default function Hero() {
-  const chips = [
-    { label: "AI/CV", value: "YOLOv8-seg", conf: "0.98" },
-    { label: "DevOps", value: "Azure AKS", conf: "0.96" },
-    { label: "Full-Stack", value: "MERN Stack", conf: "0.98" },
-    { label: "GenAI", value: "LangChain / RAG", conf: "0.96" },
-  ];
-
+export function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#07090C]"
-    >
-      {/* 3D Lightweight Particle Point Cloud */}
-      <HeroPointCloud />
+    <section className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0A0D14]">
+      {/* Swiss Editorial Precision Grid Lines */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
+      
+      {/* Holographic Prismatic Background Ambient Glows */}
+      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 -right-48 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[600px] h-48 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto w-full text-center flex flex-col items-center">
-        {/* Availability Status Pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E1218] border border-[#00E599]/30 text-[11px] font-mono-hud text-[#00E599] mb-8 shadow-[0_0_15px_rgba(0,229,153,0.15)]">
-          <span className="w-2 h-2 rounded-full bg-[#00E599] animate-pulse" />
-          <span>{profile.identity.statusPill}</span>
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
+        {/* Top Operational Status Pill */}
+        <div className="flex items-center justify-center mb-8">
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#121722] border border-white/10 shadow-lg backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-xs font-mono tracking-wider text-slate-300">
+              CORTEVA AGRISCIENCE &bull; AI/ML VISION INTERN
+            </span>
+            <span className="h-3 w-px bg-white/10" />
+            <span className="text-[11px] font-mono text-cyan-400 font-semibold">
+              AVAILABLE MAY 2025
+            </span>
+          </div>
         </div>
 
-        {/* Central Detection Bounding Box on Identity */}
-        <BoundingBox
-          label="ENGINEER_ID 0.99"
-          confidence=""
-          className="p-8 sm:p-12 bg-[#0E1218]/70 backdrop-blur-md max-w-4xl w-full mb-8"
-        >
-          <div className="text-xs font-mono-hud text-[#4DE1FF] mb-2 uppercase tracking-widest">
-            // {profile.identity.name}
+        {/* Central Swiss Editorial Headline */}
+        <div className="text-center space-y-6">
+          <div className="inline-block">
+            <span className="text-xs font-mono uppercase tracking-[0.3em] text-cyan-400 mb-2 block">
+              [01 // COMPUTER VISION & FULL-STACK SYSTEMS ENGINEER]
+            </span>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#EDEFF2] mb-4">
-            {profile.identity.title}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white font-sans leading-[1.05]">
+            Architecting <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
+              High-Precision Vision
+            </span>{" "}
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-indigo-400">
+              & Distributed Systems.
+            </span>
           </h1>
 
-          <p className="font-display text-xl sm:text-2xl md:text-3xl text-[#EDEFF2]/90 font-medium mb-4 max-w-2xl mx-auto">
-            "{profile.editorial.heroLead}"
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
+            I build production multi-view computer vision rigs, train quantized edge models (YOLOv8-seg, BRISQUE), and engineer resilient full-stack cloud microservices.
           </p>
 
-          <p className="font-mono-hud text-xs sm:text-sm text-[#8A93A0] max-w-xl mx-auto">
-            › {profile.identity.roleLine}
-          </p>
-        </BoundingBox>
-
-        {/* Floating Telemetry Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-10 font-mono-hud text-xs">
-          {chips.map((chip, idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0E1218] border border-white/10 text-[#EDEFF2]/80 hover:border-[#C6FF3D]/40 transition-colors"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C6FF3D]" />
-              <span className="text-white/40">{chip.label}:</span>
-              <span className="font-semibold text-white">{chip.value}</span>
-              <span className="text-[10px] text-[#C6FF3D]">{chip.conf}</span>
+          {/* Core Verified Fact Metric Strips */}
+          <div className="pt-6 pb-4 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-left">
+            <div className="flex items-center gap-3 bg-[#111622]/80 border border-white/10 px-4 py-2.5 rounded-xl">
+              <div className="w-2 h-8 bg-cyan-400 rounded-full" />
+              <div>
+                <span className="text-xs font-mono text-slate-400 uppercase block">PATENT PENDING</span>
+                <span className="text-sm font-mono font-bold text-white">Smart IoT Parking &bull; 2024</span>
+              </div>
             </div>
-          ))}
-        </div>
 
-        {/* Primary Action CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-4 font-mono-hud text-xs">
-          <a
-            href="#work"
-            className="flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#C6FF3D] hover:bg-[#b5f02c] text-[#07090C] font-semibold transition-all shadow-[0_0_20px_rgba(198,255,61,0.3)]"
-            data-hud-target="true"
-          >
-            <span>Explore My Work</span>
-            <ArrowDown className="w-4 h-4" />
-          </a>
+            <div className="flex items-center gap-3 bg-[#111622]/80 border border-white/10 px-4 py-2.5 rounded-xl">
+              <div className="w-2 h-8 bg-emerald-400 rounded-full" />
+              <div>
+                <span className="text-xs font-mono text-slate-400 uppercase block">ALGORITHMS / DSA</span>
+                <span className="text-sm font-mono font-bold text-white">800+ LeetCode &bull; 1731 Rating</span>
+              </div>
+            </div>
 
-          <a
-            href={profile.contact.cvUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-3.5 rounded-lg bg-[#0E1218] border border-white/10 hover:border-white/25 text-[#EDEFF2] transition-colors"
-            data-hud-target="true"
-          >
-            <FileText className="w-4 h-4 text-[#4DE1FF]" />
-            <span>Download CV [PDF]</span>
-          </a>
+            <div className="flex items-center gap-3 bg-[#111622]/80 border border-white/10 px-4 py-2.5 rounded-xl">
+              <div className="w-2 h-8 bg-indigo-400 rounded-full" />
+              <div>
+                <span className="text-xs font-mono text-slate-400 uppercase block">CORTEVA PIPELINE</span>
+                <span className="text-sm font-mono font-bold text-white">18+ video_toolkit functions</span>
+              </div>
+            </div>
+          </div>
 
-          <a
-            href="#contact"
-            className="flex items-center gap-2 px-5 py-3.5 rounded-lg bg-[#0E1218] border border-white/10 hover:border-[#C6FF3D]/40 text-[#EDEFF2] transition-colors"
-            data-hud-target="true"
-          >
-            <Send className="w-4 h-4 text-[#C6FF3D]" />
-            <span>Let's Connect</span>
-          </a>
+          {/* Primary Call to Action Buttons */}
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="#experience"
+              className="px-6 py-3.5 rounded-xl bg-white text-slate-950 font-semibold font-mono text-xs sm:text-sm hover:bg-slate-200 transition-all flex items-center gap-2 shadow-xl shadow-white/10 hover:scale-[1.02]"
+            >
+              <Cpu className="w-4 h-4 text-slate-950" />
+              <span>EXPLORE CORTEVA VISION LAB</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+
+            <a
+              href="#projects"
+              className="px-6 py-3.5 rounded-xl bg-[#121722] hover:bg-[#182030] text-white font-mono text-xs sm:text-sm border border-white/15 transition-all flex items-center gap-2 hover:border-cyan-500/50"
+            >
+              <Scan className="w-4 h-4 text-cyan-400" />
+              <span>VIEW 6 PRODUCTION PROJECTS</span>
+            </a>
+
+            <a
+              href={PROFILE.contact.cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-mono text-xs sm:text-sm border border-white/10 transition-all flex items-center gap-2"
+            >
+              <FileText className="w-4 h-4 text-slate-400" />
+              <span>RESUME</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+export default Hero;

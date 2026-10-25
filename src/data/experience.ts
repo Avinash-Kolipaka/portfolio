@@ -60,3 +60,5 @@ export const experiences: ExperienceItem[] = [
     skills: ["DSA", "Operating Systems", "Distributed Systems", "Computer Networks"]
   }
 ];
+
+export const EXPERIENCES = experiences;

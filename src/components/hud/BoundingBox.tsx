@@ -2,49 +2,66 @@
 
 import React from "react";
 
-interface BoundingBoxProps {
+export interface BoundingBoxProps {
   label?: string;
-  confidence?: string;
-  children: React.ReactNode;
-  className?: string;
+  confidence?: number | string;
   bracketColor?: string;
+  className?: string;
+  children: React.ReactNode;
 }
 
-export default function BoundingBox({
-  label,
-  confidence,
-  children,
+export function BoundingBox({
+  label = "SPECIMEN // DETECTED",
+  confidence = 0.98,
+  bracketColor,
   className = "",
-  bracketColor = "#C6FF3D"
+  children,
 }: BoundingBoxProps) {
+  const formatConfidence = (c: number | string | undefined) => {
+    if (c === undefined || c === null || c === "") return null;
+    if (typeof c === "number") return `${(c * 100).toFixed(0)}%`;
+    if (typeof c === "string" && !isNaN(Number(c)) && Number(c) <= 1 && Number(c) > 0) {
+      return `${(Number(c) * 100).toFixed(0)}%`;
+    }
+    return c;
+  };
+
+  const bracketStyle = bracketColor ? { borderColor: bracketColor } : undefined;
+
   return (
-    <div
-      className={`relative rounded-lg border border-white/[0.08] transition-all duration-300 hover:border-white/[0.18] group ${className}`}
-    >
-      {/* HUD Corner Brackets */}
-      <span
-        className="corner-bracket-tl group-hover:scale-110 transition-transform"
-        style={{ borderColor: bracketColor }}
+    <div className={`relative group ${className}`}>
+      {/* Precision Hairline Swiss Corner Brackets */}
+      <div 
+        className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-cyan-400" 
+        style={bracketStyle}
       />
-      <span
-        className="corner-bracket-tr group-hover:scale-110 transition-transform"
-        style={{ borderColor: bracketColor }}
+      <div 
+        className="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-cyan-400" 
+        style={bracketStyle}
       />
-      <span
-        className="corner-bracket-bl group-hover:scale-110 transition-transform"
-        style={{ borderColor: bracketColor }}
+      <div 
+        className="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-cyan-400" 
+        style={bracketStyle}
       />
-      <span
-        className="corner-bracket-br group-hover:scale-110 transition-transform"
-        style={{ borderColor: bracketColor }}
+      <div 
+        className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-cyan-400" 
+        style={bracketStyle}
       />
 
-      {/* Top Left Monospace Detection Label */}
-      {(label || confidence) && (
-        <div className="absolute -top-3 left-3 z-20 flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#07090C] border border-white/10 text-[10px] font-mono-hud text-[#C6FF3D] pointer-events-none select-none shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C6FF3D] animate-pulse" />
-          {label && <span className="uppercase tracking-wider">{label}</span>}
-          {confidence && <span className="text-white/40">{confidence}</span>}
+      {/* Top Swiss Telemetry Tag */}
+      {label && (
+        <div 
+          className="absolute -top-3 left-3 bg-[#0A0D14] border border-cyan-500/40 px-2 py-0.5 rounded text-[10px] font-mono text-cyan-400 tracking-wider flex items-center gap-1.5 z-10"
+          style={bracketColor ? { borderColor: bracketColor, color: bracketColor } : undefined}
+        >
+          <span 
+            className="w-1.5 h-1.5 rounded-full bg-cyan-400" 
+            style={bracketColor ? { backgroundColor: bracketColor } : undefined}
+          />
+          <span>{label}</span>
+          {confidence !== undefined && confidence !== "" && (
+            <span className="text-slate-400">({formatConfidence(confidence)})</span>
+          )}
         </div>
       )}
 
@@ -52,3 +69,5 @@ export default function BoundingBox({
     </div>
   );
 }
+
+export default BoundingBox;

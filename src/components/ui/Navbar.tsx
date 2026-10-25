@@ -2,132 +2,118 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Menu } from "lucide-react";
-import MobileMenu from "./MobileMenu";
-import { profile } from "@/data/profile";
+import { Terminal, Menu, X, ArrowUpRight, Cpu } from "lucide-react";
+import { PROFILE } from "@/data/profile";
 
-export default function Navbar() {
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-
-      const sections = ["hero", "about", "experience", "work", "ip-vault", "skills", "proof", "contact"];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 160 && rect.bottom >= 160) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
+      setScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const openCommandPalette = () => {
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
-  };
-
   const navLinks = [
-    { label: "About", href: "#about", id: "about" },
-    { label: "Experience", href: "#experience", id: "experience" },
-    { label: "Work", href: "#work", id: "work" },
-    { label: "IP Vault", href: "#ip-vault", id: "ip-vault" },
-    { label: "Skills", href: "#skills", id: "skills" },
-    { label: "Proof", href: "#proof", id: "proof" },
-    { label: "Contact", href: "#contact", id: "contact" },
+    { label: "EXPERIENCE", href: "#experience" },
+    { label: "PROJECTS", href: "#projects" },
+    { label: "PATENTS", href: "#patents" },
+    { label: "SKILLS", href: "#skills" },
+    { label: "CONTACT", href: "#contact" },
   ];
 
   return (
-    <>
-      <nav
-        aria-label="Primary Navigation"
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 font-mono-hud text-xs ${
-          scrolled
-            ? "bg-[#07090C]/85 backdrop-blur-md border-b border-white/10 py-3"
-            : "bg-transparent py-5"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Left: Monogram and Feed Status */}
-          <Link
-            href="#hero"
-            className="flex items-center gap-3 group"
-            data-hud-target="true"
-          >
-            <span className="px-2.5 py-1 rounded bg-[#0E1218] border border-[#C6FF3D]/40 text-[#C6FF3D] font-bold text-xs tracking-wider group-hover:border-[#C6FF3D] transition-colors">
-              {profile.identity.monogram}
-            </span>
-            <div className="hidden sm:flex flex-col text-[10px] leading-tight text-white/40">
-              <span className="text-[#C6FF3D]">// DETECTION_FEED // STABLE</span>
-              <span>// VISION_ENG</span>
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? "bg-[#0A0D14]/90 backdrop-blur-md border-b border-white/10 shadow-lg py-3" 
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          {/* Swiss Monogram Brand */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 via-emerald-400 to-indigo-500 p-0.5 flex items-center justify-center">
+              <div className="w-full h-full bg-[#0A0D14] rounded-[6px] flex items-center justify-center font-mono font-bold text-xs text-white group-hover:text-cyan-400 transition-colors">
+                AK
+              </div>
+            </div>
+            <div>
+              <span className="font-mono font-bold text-sm text-white tracking-wider block">
+                KOLIPAKA AVINASH
+              </span>
+              <span className="text-[10px] font-mono text-cyan-400/80 block -mt-1">
+                AI/ML @ CORTEVA
+              </span>
             </div>
           </Link>
 
-          {/* Right: Section Links */}
-          <div className="hidden lg:flex items-center gap-1 bg-[#0E1218]/80 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
-                key={link.id}
+                key={link.label}
                 href={link.href}
-                className={`px-3 py-1 rounded-full text-xs transition-colors ${
-                  activeSection === link.id
-                    ? "bg-[#C6FF3D] text-[#07090C] font-semibold"
-                    : "text-white/60 hover:text-white"
-                }`}
-                data-hud-target="true"
+                className="text-xs font-mono text-slate-300 hover:text-white transition-colors tracking-wider"
               >
                 {link.label}
               </a>
             ))}
-          </div>
+          </nav>
 
-          {/* Right Actions: Command Palette & CTA */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={openCommandPalette}
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0E1218] border border-white/10 text-white/50 hover:text-[#C6FF3D] hover:border-[#C6FF3D]/40 text-xs transition-colors"
-              title="Open Command Palette (⌘K or /)"
-              data-hud-target="true"
-            >
-              <Search className="w-3.5 h-3.5" />
-              <span className="text-[11px]">⌘K</span>
-            </button>
-
+          {/* Right Action Button */}
+          <div className="hidden sm:flex items-center gap-3">
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[#C6FF3D] hover:bg-[#b5f02c] text-[#07090C] font-semibold text-xs transition-colors shadow-[0_0_15px_rgba(198,255,61,0.25)]"
-              data-hud-target="true"
+              className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-mono border border-white/10 hover:border-cyan-500/40 transition-all flex items-center gap-1.5"
             >
-              <span>Let's Talk</span>
-              <span>↗</span>
+              <span>CONNECT</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400" />
             </a>
+          </div>
 
-            {/* Mobile Menu Button */}
+          {/* Mobile Hamburger Toggle */}
+          <div className="flex md:hidden">
             <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-lg bg-[#0E1218] border border-white/10 text-white/70 hover:text-white"
-              aria-label="Toggle Mobile Navigation"
-              data-hud-target="true"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg bg-white/5 text-slate-300 hover:text-white"
             >
-              <Menu className="w-5 h-5" />
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      </nav>
 
-      <MobileMenu
-        isOpen={mobileMenuOpen}
-        onClose={() => setMobileMenuOpen(false)}
-      />
-    </>
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-3 p-4 rounded-xl bg-[#0F1420] border border-white/10 space-y-3 font-mono text-xs">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-slate-300 hover:text-cyan-400 py-1"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="pt-2 border-t border-white/10">
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-center py-2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
+              >
+                CONNECT
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   );
 }
+
+export default Navbar;
