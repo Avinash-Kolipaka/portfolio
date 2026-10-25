@@ -1,218 +1,105 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
-import { ArrowDown, Download, Mail, ExternalLink } from "lucide-react";
-import { useRef, useState } from "react";
-import Image from "next/image";
-
-function MagneticButton({ children, className }: { children: React.ReactNode; className?: string }) {
-    const ref = useRef<HTMLDivElement>(null);
-    const [pos, setPos] = useState({ x: 0, y: 0 });
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const rect = ref.current?.getBoundingClientRect();
-        if (!rect) return;
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        setPos({ x: x * 0.3, y: y * 0.3 });
-    };
-
-    const handleMouseLeave = () => setPos({ x: 0, y: 0 });
-
-    return (
-        <motion.div
-            ref={ref}
-            animate={{ x: pos.x, y: pos.y }}
-            transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className={className}
-        >
-            {children}
-        </motion.div>
-    );
-}
+import React from "react";
+import Link from "next/link";
+import { ArrowDown, FileText, Send } from "lucide-react";
+import BoundingBox from "../hud/BoundingBox";
+import HeroPointCloud from "../visual/HeroPointCloud";
+import { profile } from "@/data/profile";
 
 export default function Hero() {
-    const scrollToSection = (id: string) => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    };
+  const chips = [
+    { label: "AI/CV", value: "YOLOv8-seg", conf: "0.98" },
+    { label: "DevOps", value: "Azure AKS", conf: "0.96" },
+    { label: "Full-Stack", value: "MERN Stack", conf: "0.98" },
+    { label: "GenAI", value: "LangChain / RAG", conf: "0.96" },
+  ];
 
-    return (
-        <section
-            id="hero"
-            className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4"
+  return (
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#07090C]"
+    >
+      {/* 3D Lightweight Particle Point Cloud */}
+      <HeroPointCloud />
+
+      <div className="relative z-10 max-w-5xl mx-auto w-full text-center flex flex-col items-center">
+        {/* Availability Status Pill */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E1218] border border-[#00E599]/30 text-[11px] font-mono-hud text-[#00E599] mb-8 shadow-[0_0_15px_rgba(0,229,153,0.15)]">
+          <span className="w-2 h-2 rounded-full bg-[#00E599] animate-pulse" />
+          <span>{profile.identity.statusPill}</span>
+        </div>
+
+        {/* Central Detection Bounding Box on Identity */}
+        <BoundingBox
+          label="ENGINEER_ID 0.99"
+          confidence=""
+          className="p-8 sm:p-12 bg-[#0E1218]/70 backdrop-blur-md max-w-4xl w-full mb-8"
         >
-            {/* Animated background blobs */}
-            <div className="absolute inset-0 -z-10">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[128px] animate-blob" />
-                <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-purple-600/20 rounded-full blur-[128px] animate-blob [animation-delay:2s]" />
-                <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-emerald-600/15 rounded-full blur-[128px] animate-blob [animation-delay:4s]" />
-            </div>
+          <div className="text-xs font-mono-hud text-[#4DE1FF] mb-2 uppercase tracking-widest">
+            // {profile.identity.name}
+          </div>
 
-            <div className="max-w-5xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#EDEFF2] mb-4">
+            {profile.identity.title}
+          </h1>
 
-                {/* Profile Photo */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.1 }}
-                    className="relative flex-shrink-0"
-                >
-                    {/* Rotating gradient ring */}
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                        className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 opacity-80 blur-sm"
-                    />
-                    {/* Pulsing glow */}
-                    <motion.div
-                        animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.7, 0.4] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -inset-4 rounded-full bg-blue-500/20 blur-xl"
-                    />
-                    {/* Photo */}
-                    <div className="relative w-56 h-56 lg:w-72 lg:h-72 rounded-full overflow-hidden border-2 border-white/10">
-                        <Image
-                            src="/profile.jpg"
-                            alt="Avinash Kolipaka"
-                            fill
-                            className="object-cover object-top"
-                            priority
-                        />
-                    </div>
-                    {/* Floating status badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                        className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 rounded-full glass border border-emerald-500/30 text-xs font-medium text-emerald-400"
-                    >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        Available for Hire
-                    </motion.div>
-                </motion.div>
+          <p className="font-display text-xl sm:text-2xl md:text-3xl text-[#EDEFF2]/90 font-medium mb-4 max-w-2xl mx-auto">
+            "{profile.editorial.heroLead}"
+          </p>
 
-                {/* Text Content */}
-                <div className="text-center lg:text-left flex-1">
-                    {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 text-sm text-primary mb-6"
-                    >
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        Open to Internship Opportunities
-                    </motion.div>
+          <p className="font-mono-hud text-xs sm:text-sm text-[#8A93A0] max-w-xl mx-auto">
+            › {profile.identity.roleLine}
+          </p>
+        </BoundingBox>
 
-                    {/* Main Heading */}
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-4"
-                    >
-                        Hi, I&apos;m{" "}
-                        <span className="text-gradient">Avinash Kolipaka</span>
-                    </motion.h1>
-
-                    {/* Typing Animation */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                        className="text-xl sm:text-2xl text-foreground/60 mb-4 font-heading h-10"
-                    >
-                        <TypeAnimation
-                            sequence={[
-                                "MERN Stack Developer",
-                                2000,
-                                "AI & GenAI Builder",
-                                2000,
-                                "Problem Solver",
-                                2000,
-                                "Startup Innovator",
-                                2000,
-                                "Future Software Engineer",
-                                2000,
-                            ]}
-                            wrapper="span"
-                            speed={50}
-                            repeat={Infinity}
-                            className="text-primary"
-                        />
-                    </motion.div>
-
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                        className="text-foreground/50 text-base max-w-xl mb-10"
-                    >
-                        B.Tech CSE @ Lovely Professional University · Building real-world tech solutions with AI, full-stack development, and startup thinking.
-                    </motion.p>
-
-                    {/* CTA Buttons */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                        className="flex flex-wrap gap-4 justify-center lg:justify-start"
-                    >
-                        <MagneticButton>
-                            <button
-                                onClick={() => scrollToSection("projects")}
-                                className="group flex items-center gap-2 px-8 py-4 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:scale-105 active:scale-95"
-                            >
-                                View Projects
-                                <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform" />
-                            </button>
-                        </MagneticButton>
-
-                        <MagneticButton>
-                            <a
-                                href="/resume.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/20 font-semibold hover:border-primary/50 hover:bg-primary/10 transition-all hover:scale-105 active:scale-95"
-                            >
-                                View CV
-                                <Download size={18} className="group-hover:translate-y-1 transition-transform" />
-                            </a>
-                        </MagneticButton>
-
-                        <MagneticButton>
-                            <button
-                                onClick={() => scrollToSection("contact")}
-                                className="group flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/20 font-semibold hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all hover:scale-105 active:scale-95"
-                            >
-                                Contact Me
-                                <Mail size={18} className="group-hover:rotate-12 transition-transform" />
-                            </button>
-                        </MagneticButton>
-                    </motion.div>
-                </div>
-            </div>
-
-            {/* Scroll indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
-                onClick={() => scrollToSection("about")}
+        {/* Floating Telemetry Chips */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10 font-mono-hud text-xs">
+          {chips.map((chip, idx) => (
+            <div
+              key={idx}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0E1218] border border-white/10 text-[#EDEFF2]/80 hover:border-[#C6FF3D]/40 transition-colors"
             >
-                <motion.div
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                    className="flex flex-col items-center gap-2 text-foreground/30 hover:text-primary transition-colors"
-                >
-                    <span className="text-xs tracking-widest uppercase">Scroll</span>
-                    <ArrowDown size={20} />
-                </motion.div>
-            </motion.div>
-        </section>
-    );
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C6FF3D]" />
+              <span className="text-white/40">{chip.label}:</span>
+              <span className="font-semibold text-white">{chip.value}</span>
+              <span className="text-[10px] text-[#C6FF3D]">{chip.conf}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Primary Action CTAs */}
+        <div className="flex flex-wrap items-center justify-center gap-4 font-mono-hud text-xs">
+          <a
+            href="#work"
+            className="flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#C6FF3D] hover:bg-[#b5f02c] text-[#07090C] font-semibold transition-all shadow-[0_0_20px_rgba(198,255,61,0.3)]"
+            data-hud-target="true"
+          >
+            <span>Explore My Work</span>
+            <ArrowDown className="w-4 h-4" />
+          </a>
+
+          <a
+            href={profile.contact.cvUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-3.5 rounded-lg bg-[#0E1218] border border-white/10 hover:border-white/25 text-[#EDEFF2] transition-colors"
+            data-hud-target="true"
+          >
+            <FileText className="w-4 h-4 text-[#4DE1FF]" />
+            <span>Download CV [PDF]</span>
+          </a>
+
+          <a
+            href="#contact"
+            className="flex items-center gap-2 px-5 py-3.5 rounded-lg bg-[#0E1218] border border-white/10 hover:border-[#C6FF3D]/40 text-[#EDEFF2] transition-colors"
+            data-hud-target="true"
+          >
+            <Send className="w-4 h-4 text-[#C6FF3D]" />
+            <span>Let's Connect</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
 }

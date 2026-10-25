@@ -1,161 +1,133 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-const NAV_LINKS = [
-    { name: "Home", href: "#hero" },
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Achievements", href: "#achievements" },
-    { name: "Experience", href: "#experience" },
-    { name: "Certifications", href: "#certifications" },
-    { name: "Training", href: "#training" },
-    { name: "Contact", href: "#contact" },
-];
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Search, Menu } from "lucide-react";
+import MobileMenu from "./MobileMenu";
+import { profile } from "@/data/profile";
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [activeSection, setActiveSection] = useState("hero");
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
 
-            // Active section tracking logic
-            const sections = NAV_LINKS.map(link => link.href.substring(1));
-            let currentSection = sections[0];
-
-            for (const section of sections) {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= 100 && rect.bottom >= 100) {
-                        currentSection = section;
-                        break;
-                    }
-                }
-            }
-            setActiveSection(currentSection);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        e.preventDefault();
-        setMobileMenuOpen(false);
-        const element = document.querySelector(href);
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+      const sections = ["hero", "about", "experience", "work", "ip-vault", "skills", "proof", "contact"];
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 160 && rect.bottom >= 160) {
+            setActiveSection(section);
+            break;
+          }
         }
+      }
     };
 
-    return (
-        <>
-            <motion.nav
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-                className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
-                    isScrolled ? "glass" : "bg-transparent",
-                )}
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const openCommandPalette = () => {
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+  };
+
+  const navLinks = [
+    { label: "About", href: "#about", id: "about" },
+    { label: "Experience", href: "#experience", id: "experience" },
+    { label: "Work", href: "#work", id: "work" },
+    { label: "IP Vault", href: "#ip-vault", id: "ip-vault" },
+    { label: "Skills", href: "#skills", id: "skills" },
+    { label: "Proof", href: "#proof", id: "proof" },
+    { label: "Contact", href: "#contact", id: "contact" },
+  ];
+
+  return (
+    <>
+      <nav
+        aria-label="Primary Navigation"
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 font-mono-hud text-xs ${
+          scrolled
+            ? "bg-[#07090C]/85 backdrop-blur-md border-b border-white/10 py-3"
+            : "bg-transparent py-5"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Left: Monogram and Feed Status */}
+          <Link
+            href="#hero"
+            className="flex items-center gap-3 group"
+            data-hud-target="true"
+          >
+            <span className="px-2.5 py-1 rounded bg-[#0E1218] border border-[#C6FF3D]/40 text-[#C6FF3D] font-bold text-xs tracking-wider group-hover:border-[#C6FF3D] transition-colors">
+              {profile.identity.monogram}
+            </span>
+            <div className="hidden sm:flex flex-col text-[10px] leading-tight text-white/40">
+              <span className="text-[#C6FF3D]">// DETECTION_FEED // STABLE</span>
+              <span>// VISION_ENG</span>
+            </div>
+          </Link>
+
+          {/* Right: Section Links */}
+          <div className="hidden lg:flex items-center gap-1 bg-[#0E1218]/80 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
+            {navLinks.map((link) => (
+              <a
+                key={link.id}
+                href={link.href}
+                className={`px-3 py-1 rounded-full text-xs transition-colors ${
+                  activeSection === link.id
+                    ? "bg-[#C6FF3D] text-[#07090C] font-semibold"
+                    : "text-white/60 hover:text-white"
+                }`}
+                data-hud-target="true"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right Actions: Command Palette & CTA */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={openCommandPalette}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0E1218] border border-white/10 text-white/50 hover:text-[#C6FF3D] hover:border-[#C6FF3D]/40 text-xs transition-colors"
+              title="Open Command Palette (⌘K or /)"
+              data-hud-target="true"
             >
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <a
-                        href="#hero"
-                        onClick={(e) => scrollToSection(e, "#hero")}
-                        className="text-xl font-bold font-heading text-foreground"
-                    >
-                        A.K.
-                    </a>
+              <Search className="w-3.5 h-3.5" />
+              <span className="text-[11px]">⌘K</span>
+            </button>
 
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        {NAV_LINKS.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                onClick={(e) => scrollToSection(e, link.href)}
-                                className={cn(
-                                    "text-sm font-medium transition-colors hover:text-primary relative group",
-                                    activeSection === link.href.substring(1) ? "text-primary" : "text-foreground/80"
-                                )}
-                            >
-                                {link.name}
-                                {activeSection === link.href.substring(1) && (
-                                    <motion.span
-                                        layoutId="activeSection"
-                                        className="absolute -bottom-1 left-0 w-full h-[2px] bg-primary rounded-full"
-                                    />
-                                )}
-                            </a>
-                        ))}
-                        {/* CV Button */}
-                        <a
-                            href="/resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-primary/10 border border-primary/30 text-primary text-sm font-semibold hover:bg-primary/20 hover:border-primary/60 transition-all hover:scale-105 active:scale-95"
-                        >
-                            <FileText size={14} />
-                            CV
-                        </a>
-                    </div>
+            <a
+              href="#contact"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[#C6FF3D] hover:bg-[#b5f02c] text-[#07090C] font-semibold text-xs transition-colors shadow-[0_0_15px_rgba(198,255,61,0.25)]"
+              data-hud-target="true"
+            >
+              <span>Let's Talk</span>
+              <span>↗</span>
+            </a>
 
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        className="md:hidden text-foreground hover:text-primary transition-colors"
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    >
-                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
-                </div>
-            </motion.nav>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden p-2 rounded-lg bg-[#0E1218] border border-white/10 text-white/70 hover:text-white"
+              aria-label="Toggle Mobile Navigation"
+              data-hud-target="true"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </nav>
 
-            {/* Mobile Nav Overlay */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-40 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center space-y-8 md:hidden"
-                    >
-                        {NAV_LINKS.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                onClick={(e) => scrollToSection(e, link.href)}
-                                className={cn(
-                                    "text-2xl font-bold transition-colors hover:text-primary",
-                                    activeSection === link.href.substring(1) ? "text-primary" : "text-foreground"
-                                )}
-                            >
-                                {link.name}
-                            </a>
-                        ))}
-                        {/* CV Button */}
-                        <a
-                            href="/resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary/10 border border-primary/30 text-primary text-xl font-bold hover:bg-primary/20 transition-all"
-                        >
-                            <FileText size={20} />
-                            CV
-                        </a>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    );
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
+    </>
+  );
 }
